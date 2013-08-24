@@ -1,0 +1,69 @@
+<html>
+	<head>
+		<link href="css/cyborg.css" rel="stylesheet" type="text/css" />
+		<link href="css/table.css" rel="stylesheet" type="text/css" />
+		<link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+		<script type="text/javascript" src="script/jquery.js"></script>
+		<script type="text/javascript" src="script/bootstrap.js"></script>
+		<script type="text/javascript" src="script/init.js"></script>
+	</head>
+	<body style="height:100%;min-height:900px;">
+		<div id="content" class="container" style="background-color:#020202;min-height:100%;">
+			<div class="row" style="margin: 20px 0px;">
+				<div class="span12">
+					<a class="brand" style="font-size:20px;">Search Algorithm Visualizer</a>
+				</div>
+			</div>
+			<div id="header" class="row">
+				<div class="span12">
+					<div class="navbar">
+						<div class="navbar-inner" style="padding-left:0px;">
+							<ul class="nav">
+								<li class="active"><a>Depth First</a></li>
+								<li class="divider-vertical"></li>
+								<li><a>Breadth First</a></li>
+								<li class="divider-vertical"></li>
+								<li><a>Greedy</a></li>
+								<li class="divider-vertical"></li>
+								<li><a>A Star</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="selector" class="row">
+				<div class="offset2 span8">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<ul class="nav nav-pills">
+								<li class="dropdown">
+									<a id="displayed-option" class="dropdown-toggle" data-toggle="dropdown" href="#">Start Location
+									<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li class="active"><a>Start Location</a></li>
+										<li><a>End Location</a></li>
+										<li><a>Obstacle</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="offset2 span8" style="border:solid 3px #222;border-radius:3px;">
+					<table id="grid" style="width:620px;height:620px;">
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div id="brought-by" class="offset2 span8" style="margin-top: 20px;">
+					Brought to you by: Talon James Bowler
+					<a href="https://twitter.com/Moghedrin" class="twitter-follow-button" data-show-count="false" data-lang="en-gb">Follow @Moghedrin</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

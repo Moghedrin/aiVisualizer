@@ -1,0 +1,43 @@
+* {
+	font-family: 'Press Start 2P', cursive;
+	font-size: 10px;
+}
+#grid td {
+	padding: 1px;
+	background-color: #444;
+	border:solid 1px #33b5e5;
+	text-align: center;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	cursor: pointer;
+}
+
+#grid td.hovered {
+	background-color: rgba(90, 90, 90, 1.0);
+}
+
+#brought-by {
+	position: relative;
+}
+
+.twitter-follow-button {
+	position: absolute;
+	right: 0px;
+}
+
+a#displayed-option {
+	color: #fff;
+}
+
+#grid td.start {
+	background-color: #1765B3;
+}
+
+#grid td.end {
+	background-color: #CA9029;
+}
+
+#grid td.obstacle {
+	background-color: #222;
+}
