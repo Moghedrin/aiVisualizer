@@ -34,8 +34,8 @@ $(document).ready(function() {
 	for(var i = 0; i < size; i++) {
 		table_body.append('<tr id="r' + String(i) + '"></tr>');
 		for(var j = 0; j < size; j++) {
-			table_body.find('#r' + String(i)).append('<td id="td' + String(j+i*10) + '"></td>');
-			$('td#td'+String(j+i*10)).attr('x', j).attr('y', i);
+			table_body.find('#r' + String(i)).append('<td id="td' + String(j+i*size) + '"></td>');
+			$('td#td'+String(j+i*size)).attr('x', j).attr('y', i);
 		}
 	}
 	$(document).mousedown(function() {
