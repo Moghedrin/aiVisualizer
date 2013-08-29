@@ -1,18 +1,30 @@
 function initialize(size) {
 	var isMouseDown = true;
 	var table_body = $('#grid tbody');
+	function hasAClass(selector, classes) {
+		for(i in classes) {
+			if ($(selector).hasClass(classes[i])) {
+				return true;
+			}
+		}
+		return false;
+	}
 	function toggleCurrentSquare() {
 		var s = $('#selector .nav .dropdown-menu li.active').attr('selection');
-		if($(this).hasClass('end') || $(this).hasClass('start') || ($(this).hasClass('obstacle') && s != '2')) {
+		if(hasAClass(this, ['end', 'start', 'path']) || ($(this).hasClass('obstacle') && s != '2')) {
 			return;
 		}
 		if (s == '0') {
+			$('#grid td.start').text('');
 			$('#grid td.start').toggleClass('start');
 			$(this).toggleClass('start');
+			$(this).text('S');
 		}
 		else if (s == '1') {
+			$('#grid td.end').text('');
 			$('#grid td.end').toggleClass('end');
 			$(this).toggleClass('end');
+			$(this).text('E');
 		}
 		else if (s == '2') {
 			if (!$(this).hasClass('toggled')) {
@@ -37,6 +49,8 @@ function initialize(size) {
 			$('td#td'+String(j+i*size)).attr('x', j).attr('y', i);
 		}
 	}
+	var cs = String(Math.floor( 620 / size * 100) / 100 - 2);
+	$('#grid td').css({'width' : cs, 'height' : cs});
 	$(document).mousedown(function() {
 		isMouseDown = true;
 	});
@@ -54,7 +68,7 @@ function initialize(size) {
 	);
 	$('#grid td').mouseenter(condCallback(isDown, toggleCurrentSquare));
 	$('#grid td').mousedown(toggleCurrentSquare);
-	$('#header .nav li').not('.divider-vertical').click(function() {
+	$('#header .nav li').not('.divider-vertical').not('#instructions').click(function() {
 		$('#header .nav li.active').toggleClass('active');
 		$(this).toggleClass('active');
 	});

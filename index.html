@@ -1,35 +1,56 @@
 <html>
 	<head>
 		<link href="css/cyborg.css" rel="stylesheet" type="text/css" />
+		<link href="css/slider.css" rel="stylesheet" type="text/css" />
 		<link href="css/table.css" rel="stylesheet" type="text/css" />
 		<link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
 		<script type="text/javascript" src="script/external/jquery.js"></script>
 		<script type="text/javascript" src="script/external/bootstrap.js"></script>
+		<script type="text/javascript" src="script/external/bootstrap-slider.js"></script>
+		<script type="text/javascript" src="script/external/bootstrap-carousel.js"></script>
 		<script type="text/javascript" src="script/external/buckets.js"></script>
 		<script type="text/javascript" src="script/init/init.js"></script>
 		<script type="text/javascript" src="script/search/search.js"></script>
 		<script type="text/javascript">
-			var size = 10;
+			var size = 30;
+			function issueAlert(alertType, alertMessage) {
+				//alertType in ['warning', 'success', 'info', '']
+				$('#alertModal .modal-body.alert').toggleClass('alert-'+alertType).text(alertMessage);
+				$('#alertModal').modal();
+			}
+			function dismissAlert() {
+				$('#alertModal .modal-body.alert').attr('class', 'modal-body alert').text('');
+			}
 			$(document).ready(function() {
 				initialize(size);
 				RUN = function() {
-					var world = generateWorld(size);
+					world = generateWorld(size);
 					if (world.start == {} || world.end == {}) {
 						return null;
 					}
 					var k = new node(world.start, world);
 					var fringe = new buckets.Stack();
-					var searchRes = search(fringe, world, k, function(s) { return s.x == world.end.x && s.y == world.end.y; });
-					var current = searchRes;
-					console.log(searchRes);
-					while (current) {
-						$('#td' + String(current.x + current.y * size)).toggleClass('path');
-						current = current.__proto__;
-						//Yeah... I know this breaks IE, and is DEFINITELY not the best place to use
-						//Javascripts Prototyping, but I really wanted to play with it, as it's a
-						//Javascript feature I was more unfamiliar with.
+					if ($('.end').length && $('.start')) {
+						var searchRes = search(fringe, world, k, function(s) { return s.x == world.end.x && s.y == world.end.y; });
+						if (!searchRes) {
+							issueAlert('info', 'No path could be found! Better luck next time.');
+							return null;
+						}
+						var backup = function(fin) {
+							if (fin.x == world.start.x && fin.y == world.start.y) {
+								return 0;
+							}
+							var number = backup(fin.__proto__) + 1;
+							var selector = $('#td' + String(fin.x + fin.y * size));
+							selector.toggleClass('path').text(String(number));
+							return number;
+						}
+						backup(searchRes.__proto__);
+						return searchRes;
 					}
-					return searchRes;
+					else {
+						issueAlert('error', 'You must put, at least, a start and end point!');
+					}
 				}
 			});
 		</script>
@@ -53,6 +74,8 @@
 								<li><a>Greedy</a></li>
 								<li class="divider-vertical"></li>
 								<li><a>A Star</a></li>
+								<li class="divider-vertical"></li>
+								<li id="instructions" onclick="$('#instructionModal').modal();"><a>Instructions</a></li>
 							</ul>
 						</div>
 					</div>
@@ -72,6 +95,8 @@
 										<li><a>Obstacle</a></li>
 									</ul>
 								</li>
+								<li onclick="RUN()"><a>Run Search</a></li>
+								<li onclick="$('#optionModal').modal();"><a>Options</a></li>
 							</ul>
 						</div>
 					</div>
@@ -79,7 +104,56 @@
 			</div>
 			<div class="row">
 				<div class="offset2 span8" style="border:solid 3px #222;border-radius:3px;">
-					<table id="grid" style="width:620px;height:620px;">
+					<div id="instructionModal" class="modal fade hide" data-backdrop="static">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<span>Instructions</span>
+						</div>
+						<div class="modal-body alert alert-info">
+							<div id="instructionCarousel" class="carousel slide">
+								<div class="carousel-inner">
+									<div class="active item">
+										Hello my freaky darling.
+									</div>
+									<div class="item">
+										In the greenest of our valleys
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn" onclick="$('#instructionModal').carousel('prev');" style="float:left;">Previous</button>
+							<button type="button" class="btn" onclick="$('#instructionModal').carousel('next');">Next</button>
+						</div>
+						<script type="text/javascript">$('#instructionCarousel').carousel({interval : false});</script>
+					</div>
+					<div id="alertModal" class="modal fade hide" data-backdrop="static">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="dismissAlert();">&times;</button>
+							<span>Alert</span>
+						</div>
+						<div class="modal-body alert">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn" data-dismiss="modal" onclick="dismissAlert();">Dismiss</button>
+						</div>
+					</div>
+					<div id="optionModal" class="modal fade hide" data-backdrop="static">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="">&times;</button>
+							<span>Options</span>
+						</div>
+						<div class="modal-body">
+							<span>Grid Size</span>
+							<input id="sizeScrollbar" type="text" class="span5" value="" data-slider-min="5" data-slider-max="35" data-slider-value="20" />
+							<script type="text/javascript">$('#sizeScrollbar').slider();</script>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="">Apply</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="">Cancel</button>
+						</div>
+					</div>
+					<table id="grid">
 						<tbody></tbody>
 					</table>
 				</div>

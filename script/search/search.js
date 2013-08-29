@@ -2,7 +2,6 @@ function search(fringe, world, startState, goalTest) {
 	var tofringe = new node(startState, world);
 	fringe.push(tofringe);
 	while (true) {
-		console.log("---");
 		if (fringe.isEmpty()) {
 			return null;
 		}
@@ -12,7 +11,6 @@ function search(fringe, world, startState, goalTest) {
 			continue;
 		}
 		world.cell[ind].visited = true;
-		console.log(state);
 		if (goalTest(state)) {
 			return state;
 		}
