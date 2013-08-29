@@ -5,10 +5,33 @@
 		<link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
 		<script type="text/javascript" src="script/external/jquery.js"></script>
 		<script type="text/javascript" src="script/external/bootstrap.js"></script>
+		<script type="text/javascript" src="script/external/buckets.js"></script>
 		<script type="text/javascript" src="script/init/init.js"></script>
 		<script type="text/javascript" src="script/search/search.js"></script>
 		<script type="text/javascript">
-			$(document).ready(function() {generateStates(10);});
+			var size = 10;
+			$(document).ready(function() {
+				initialize(size);
+				RUN = function() {
+					var world = generateWorld(size);
+					if (world.start == {} || world.end == {}) {
+						return null;
+					}
+					var k = new node(world.start, world);
+					var fringe = new buckets.Stack();
+					var searchRes = search(fringe, world, k, function(s) { return s.x == world.end.x && s.y == world.end.y; });
+					var current = searchRes;
+					console.log(searchRes);
+					while (current) {
+						$('#td' + String(current.x + current.y * size)).toggleClass('path');
+						current = current.__proto__;
+						//Yeah... I know this breaks IE, and is DEFINITELY not the best place to use
+						//Javascripts Prototyping, but I really wanted to play with it, as it's a
+						//Javascript feature I was more unfamiliar with.
+					}
+					return searchRes;
+				}
+			});
 		</script>
 	</head>
 	<body style="height:100%;min-height:900px;">

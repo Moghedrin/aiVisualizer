@@ -30,6 +30,10 @@ a#displayed-option {
 	color: #fff;
 }
 
+#grid td.path {
+	background-color: #922;
+}
+
 #grid td.start {
 	background-color: #1765B3;
 }

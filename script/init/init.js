@@ -1,6 +1,5 @@
-$(document).ready(function() {
+function initialize(size) {
 	var isMouseDown = true;
-	var size = 10;
 	var table_body = $('#grid tbody');
 	function toggleCurrentSquare() {
 		var s = $('#selector .nav .dropdown-menu li.active').attr('selection');
@@ -70,4 +69,4 @@ $(document).ready(function() {
 	$('#selector .nav .dropdown-menu li').each(function(index, value) {
 		$(this).attr("selection", index);
 	});
-});
+}
