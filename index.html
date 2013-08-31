@@ -42,7 +42,7 @@
 							}
 							var number = backup(fin.__proto__) + 1;
 							var selector = $('#td' + String(fin.x + fin.y * size));
-							selector.toggleClass('path').text(String(number));
+							selector.addClass('path').text(String(number));
 							return number;
 						}
 						backup(searchRes.__proto__);
@@ -96,6 +96,7 @@
 									</ul>
 								</li>
 								<li onclick="RUN()"><a>Run Search</a></li>
+								<li onclick=""><a>Clear Board</a></li>
 								<li onclick="$('#optionModal').modal();"><a>Options</a></li>
 							</ul>
 						</div>
