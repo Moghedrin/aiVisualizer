@@ -24,7 +24,8 @@
 			$(document).ready(function() {
 				initialize(size);
 				RUN = function() {
-					world = generateWorld(size);
+					$('#grid td').removeClass('path').not('.end').not('.start').text('');
+					var world = generateWorld(size);
 					if (world.start == {} || world.end == {}) {
 						return null;
 					}
