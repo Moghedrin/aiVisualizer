@@ -8,3 +8,5 @@ function PriorityQueue(compare) {
 }
 PriorityQueue.prototype.push = Queue.prototype.enqueue;
 PriorityQueue.prototype.pop = Queue.prototype.dequeue;
+
+//#TODO Test this, make certain it actually does what I think it ought to.
