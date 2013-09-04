@@ -1,4 +1,3 @@
-//#TODO Investigate issue with BFS returning inconsistent (and sometimes incorrect) results.
 function search(fringe, world, startState, goalTest) {
 	var tofringe = new node(startState, world);
 	fringe.push(tofringe);
