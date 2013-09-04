@@ -10,6 +10,7 @@
 		<script type="text/javascript" src="script/external/bootstrap-carousel.js"></script>
 		<script type="text/javascript" src="script/external/buckets.js"></script>
 		<script type="text/javascript" src="script/init/init.js"></script>
+		<script type="text/javascript" src="script/search/wrapper.js"></script>
 		<script type="text/javascript" src="script/search/search.js"></script>
 		<script type="text/javascript">
 			var size = 20;
@@ -30,7 +31,17 @@
 						return null;
 					}
 					var k = new node(world.start, world);
-					var fringe = new buckets.Stack();
+					var selection = $('#header .nav .active').attr('selection');
+					var fringe = null;
+					if (selection == '0') {
+						fringe = new buckets.Stack();
+					}
+					else if (selection == '1') {
+						fringe = new Queue();
+					}
+					else {
+						var fringe = new Queue();
+					}
 					if ($('.end').length && $('.start')) {
 						var searchRes = search(fringe, world, k, function(s) { return s.x == world.end.x && s.y == world.end.y; });
 						if (!searchRes) {
