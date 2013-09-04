@@ -15,7 +15,7 @@
 		<script type="text/javascript">
 			var size = 20;
 			function issueAlert(alertType, alertMessage) {
-				//alertType in ['warning', 'success', 'info', '']
+				//alertType in ['error', 'warning', 'success', 'info', '']
 				$('#alertModal .modal-body.alert').toggleClass('alert-'+alertType).text(alertMessage);
 				$('#alertModal').modal();
 			}
@@ -85,7 +85,7 @@
 								<li class="divider-vertical"></li>
 								<li><a>Greedy</a></li>
 								<li class="divider-vertical"></li>
-								<li><a>A Star</a></li>
+								<li onclick="issueAlert('error', 'Not implemented.');"><a>A Star</a></li>
 								<li class="divider-vertical"></li>
 								<li id="instructions" onclick="$('#instructionModal').modal();"><a>Instructions</a></li>
 							</ul>
