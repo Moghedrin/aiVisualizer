@@ -39,6 +39,11 @@
 					else if (selection == '1') {
 						fringe = new Queue();
 					}
+					else if (selection == '2') {
+						var estr = 'return Math.abs(worldObject.end.x - state.x) + Math.abs(worldObject.end.y - state.y);';
+						var comp = compareGenerator(world, estr);
+						fringe = new PriorityQueue(comp);
+					}
 					else {
 						fringe = new Queue();
 					}
@@ -83,7 +88,7 @@
 								<li class="divider-vertical"></li>
 								<li><a>Breadth First</a></li>
 								<li class="divider-vertical"></li>
-								<li onclick="issueAlert('error', 'Not implemented.');"><a>Greedy</a></li>
+								<li><a>Greedy</a></li>
 								<li class="divider-vertical"></li>
 								<li onclick="issueAlert('error', 'Not implemented.');"><a>A Star</a></li>
 								<li class="divider-vertical"></li>
@@ -136,10 +141,29 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn next" onclick="$('#instructionModal').carousel('prev');" style="float:left;">Previous</button>
-							<button type="button" class="btn prev" onclick="$('#instructionModal').carousel('next');">Next</button>
+							<script type="text/javascript">
+								$('#instructionCarousel').carousel({interval : false});
+								var pageCount = $('#instructionCarousel .item').length;
+								setPageCountText();
+								function setPageCountText() {
+									var val = parseInt($('#pageCount').attr('val'));
+									$('#pageCount').text(String(val + 1) + '/' + String(pageCount));
+								}
+								function nextInstr() {
+									$('#instructionModal').carousel('next');
+									var v = parseInt($('#pageCount').attr('val'));
+									$('#pageCount').attr('val', (v+1) % pageCount);
+									setPageCountText();
+								}
+								function prevInstr() {
+									$('#instructionModal').carousel('prev');
+									$('#pageCount').attr('val', (v-1) % pageCount);
+									setPageCountText();
+								}
+							</script>
+							<button type="button" class="btn next" onclick="prevInstr();" style="float:left;">Previous</button>
+							<button type="button" class="btn prev" onclick="nextInstr();">Next</button>
 						</div>
-						<script type="text/javascript">$('#instructionCarousel').carousel({interval : false});</script>
 					</div>
 					<div id="alertModal" class="modal fade hide" data-backdrop="static">
 						<div class="modal-header">

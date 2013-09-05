@@ -28,6 +28,20 @@ function searchType(container) {
 		search(container, goalTest, startState);
 	}
 }
+compareGenerator = function (world, evalStr) {
+	eval('var heuristic = function (worldObject, state) {' + evalStr + '}');
+	return function(a, b) {
+		var aval = heuristic(world, a);
+		var bval = heuristic(world, b);
+		if (aval > bval) {
+			return -1;
+		}
+		else if (aval < bval) {
+			return 1;
+		}
+		return 0;
+	};
+};
 function node(ancestor, world) {
 	this.__proto__ = ancestor;
 	this.applyAction = function(actionFunc) {
