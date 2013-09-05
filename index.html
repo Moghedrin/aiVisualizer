@@ -174,8 +174,9 @@
 									setPageCountText();
 								}
 								function prevInstr() {
-									$('#instructionModal').carousel('prev');
-									$('#pageCount').attr('val', (v-1) % pageCount);
+									$('#instructionModal').carousel('next');
+									var v = parseInt($('#pageCount').attr('val'));
+									$('#pageCount').attr('val', (((v-1) % pageCount)+pageCount)%pageCount);
 									setPageCountText();
 								}
 							</script>
