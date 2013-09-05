@@ -62,3 +62,7 @@ a#displayed-option {
 	background-image: linear-gradient(to bottom, #E28484, #BE0404);
 	opacity: 1.0;
 }
+
+button.close {
+	color: #FFFFFF;
+}
