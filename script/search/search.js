@@ -28,11 +28,15 @@ function searchType(container) {
 		search(container, goalTest, startState);
 	}
 }
-compareGenerator = function (world, evalStr) {
+compareGenerator = function (world, evalStr, type) {
 	eval('var heuristic = function (worldObject, state) {' + evalStr + '}');
 	return function(a, b) {
 		var aval = heuristic(world, a);
 		var bval = heuristic(world, b);
+		if (type == 'astar') {
+			aval += a.cost;
+			bval += b.cost;
+		}
 		if (aval > bval) {
 			return -1;
 		}
@@ -44,6 +48,7 @@ compareGenerator = function (world, evalStr) {
 };
 function node(ancestor, world) {
 	this.__proto__ = ancestor;
+	this.cost = this.cost + 1;
 	this.applyAction = function(actionFunc) {
 		var toret = new node(this, world);
 		actionFunc(toret);
@@ -96,6 +101,7 @@ function generateWorld(size) {
 			if (td.hasClass('start')) {
 				world.start.x = j;
 				world.start.y = i;
+				world.start.cost = 0;
 			}
 			else if (td.hasClass('end')) {
 				world.end.x = j;

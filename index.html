@@ -41,7 +41,12 @@
 					}
 					else if (selection == '2') {
 						var estr = 'return Math.abs(worldObject.end.x - state.x) + Math.abs(worldObject.end.y - state.y);';
-						var comp = compareGenerator(world, estr);
+						var comp = compareGenerator(world, estr, 'greedy');
+						fringe = new PriorityQueue(comp);
+					}
+					else if (selection == '3') {
+						var estr = 'return Math.abs(worldObject.end.x - state.x) + Math.abs(worldObject.end.y - state.y);';
+						var comp = compareGenerator(world, estr, 'astar');
 						fringe = new PriorityQueue(comp);
 					}
 					else {
@@ -90,7 +95,7 @@
 								<li class="divider-vertical"></li>
 								<li><a>Greedy</a></li>
 								<li class="divider-vertical"></li>
-								<li onclick="issueAlert('error', 'Not implemented.');"><a>A Star</a></li>
+								<li><a>A Star</a></li>
 								<li class="divider-vertical"></li>
 								<li id="instructions" onclick="$('#instructionModal').modal();"><a>Instructions</a></li>
 							</ul>
