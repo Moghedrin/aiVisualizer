@@ -1,4 +1,4 @@
-function search(fringe, world, startState, goalTest) {
+function search(fringe, world, startState, goalTest, graph) {
 	var tofringe = new node(startState, world);
 	fringe.push(tofringe);
 	while (true) {
@@ -7,10 +7,11 @@ function search(fringe, world, startState, goalTest) {
 		}
 		var state = fringe.pop();
 		var ind = state.x + state.y * world.size;
-		if (world.cell[ind].visited) {
+		if (graph && world.cell[ind].visited) {
 			continue;
 		}
 		world.cell[ind].visited = true;
+		$('#td' + String(ind)).addClass('visited');
 		if (goalTest(state)) {
 			return state;
 		}

@@ -14,6 +14,7 @@
 		<script type="text/javascript" src="script/search/search.js"></script>
 		<script type="text/javascript">
 			var size = 20;
+			var graph = true;
 			function issueAlert(alertType, alertMessage) {
 				//alertType in ['error', 'warning', 'success', 'info', '']
 				$('#alertModal .modal-body.alert').toggleClass('alert-'+alertType).text(alertMessage);
@@ -24,8 +25,9 @@
 			}
 			$(document).ready(function() {
 				initialize(size);
-				RUN = function() {
+				RUN = function(is_graph) {
 					$('#grid td').removeClass('path').not('.end').not('.start').text('');
+					$('#grid td').removeClass('visited');
 					var world = generateWorld(size);
 					if (world.start == {} || world.end == {}) {
 						return null;
@@ -53,7 +55,7 @@
 						fringe = new Queue();
 					}
 					if ($('.end').length && $('.start')) {
-						var searchRes = search(fringe, world, k, function(s) { return s.x == world.end.x && s.y == world.end.y; });
+						var searchRes = search(fringe, world, k, function(s) { return s.x == world.end.x && s.y == world.end.y; }, is_graph);
 						if (!searchRes) {
 							issueAlert('info', 'No path could be found! Better luck next time.');
 							return null;
@@ -117,7 +119,7 @@
 										<li><a>Obstacle</a></li>
 									</ul>
 								</li>
-								<li onclick="RUN()"><a>Run Search</a></li>
+								<li onclick="RUN(graph)"><a>Run Search</a></li>
 								<li onclick="$('#grid td').attr('class', '').text('');"><a>Clear Board</a></li>
 								<li onclick="$('#optionModal').modal();"><a>Options</a></li>
 							</ul>
@@ -203,12 +205,25 @@
 							<span>Options</span>
 						</div>
 						<div class="modal-body">
-							<span>Grid Size</span>
-							<input id="sizeScrollbar" type="text" class="span5" value="" data-slider-min="5" data-slider-max="35" data-slider-value="20" />
-							<script type="text/javascript">$('#sizeScrollbar').slider();</script>
+							<script type="text/javascript">
+								function apply() {
+									size=$('#sizeScrollbar').data('slider').value[0];
+									initialize(size);
+									graph = $('#graphScrollbar').data('slider').value[0] == 1;
+									if (!graph) {
+										issueAlert('error', 'You are performing a tree search. For DFS, you are likely to hit infinite loops. No DFS for you! (Of course, nobody is stopping you). Of course, a tree search also means that performance on BFS will suffer, as it checks many redundant nodes.');
+									}
+								}
+							</script>
+							<span class="span2">Grid Size</span>
+							<input id="sizeScrollbar" type="text" class="span4" value="" data-slider-min="5" data-slider-max="35" data-slider-value="20" />
+							<script type="text/javascript">$('#sizeScrollbar').slider();</script><br />
+							<span class="span2">Graph Search</span>
+							<input id="graphScrollbar" type="text" class="span4" value="" data-slider-min="0" data-slider-max="1" data-slider-value="1" />
+							<script type="text/javascript">$('#graphScrollbar').slider();</script>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="">Apply</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="apply();">Apply</button>
 							<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="">Cancel</button>
 						</div>
 					</div>

@@ -1,6 +1,7 @@
-function initialize(size) {
+function initialize(lsize) {
 	var isMouseDown = true;
 	var table_body = $('#grid tbody');
+	table_body.empty();
 	function hasAClass(selector, classes) {
 		for(i in classes) {
 			if ($(selector).hasClass(classes[i])) {
@@ -42,14 +43,15 @@ function initialize(size) {
 			}
 		};
 	}
-	for(var i = 0; i < size; i++) {
+	for(var i = 0; i < lsize; i++) {
 		table_body.append('<tr id="r' + String(i) + '"></tr>');
-		for(var j = 0; j < size; j++) {
-			table_body.find('#r' + String(i)).append('<td id="td' + String(j+i*size) + '"></td>');
-			$('td#td'+String(j+i*size)).attr('x', j).attr('y', i);
+		for(var j = 0; j < lsize; j++) {
+			console.log('-');
+			table_body.find('#r' + String(i)).append('<td id="td' + String(j+i*lsize) + '"></td>');
+			$('td#td'+String(j+i*lsize)).attr('x', j).attr('y', i);
 		}
 	}
-	var cs = String(Math.floor( 620 / size * 100) / 100 - 2);
+	var cs = String(Math.floor( 620 / lsize * 100) / 100 - 2);
 	$('#grid td').css({'width' : cs, 'height' : cs});
 	$(document).mousedown(function() {
 		isMouseDown = true;
