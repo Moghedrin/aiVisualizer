@@ -221,6 +221,12 @@
 							<span class="span2">Graph Search</span>
 							<input id="graphScrollbar" type="text" class="span4" value="" data-slider-min="0" data-slider-max="1" data-slider-value="1" />
 							<script type="text/javascript">$('#graphScrollbar').slider();</script>
+							<span class="span6">Heuristic</span><br />
+							<span class="span6">function(worldObject, state) {</span><br />
+							<div class="offset1 span5"><textarea class="span5" rows="8" style="resize:none;">
+//This is where you'd put your heuristic, if you had one!
+							</textarea></div>
+							<span class="span6">}</span>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="apply();">Apply</button>
